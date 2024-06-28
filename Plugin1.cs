@@ -41,11 +41,11 @@ namespace crmplugin
               }
               else if (entity.LogicalName == "account" && context.MessageName == "update")
               {
-
+                    tracingService.Trace("Account updated suscessfuly.");  
               }
               else if (entity.LogicalName == "account" && context.MessageName == "create")
               {
-                
+                  tracingService.Trace("Account created suscessfuly");  
               }
               else{ return;}
                //Account acct = context.InputParameters["Target"].ToEntity<Account>();
@@ -55,7 +55,8 @@ namespace crmplugin
             }
             catch (FaultException<OrganizationServiceFault> ex)
             {
-            throw new InvalidPluginExecutionException("The following error occurred in MyPlugin.", ex);
+             tracingService.Trace("An exception occurred in MyPlugin: {0}", ex.ToString());     
+             throw new InvalidPluginExecutionException("The following error occurred in MyPlugin.", ex);
             }
             catch (Exception ex)
             {
