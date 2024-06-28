@@ -39,7 +39,7 @@ namespace crmplugin
               {
                 return;
               }
-              else if (entity.LogicalName == "account" && context.MessageName == "update")
+              else if (entity.LogicalName == "account" && context.MessageName == "update") 
               {
                     tracingService.Trace("Account updated suscessfuly.");  
               }
