@@ -6,35 +6,27 @@ using MyApps.Model;
 
 namespace crmplugin
 {
-    /// <summary>
-    /// Plugin development guide: https://docs.microsoft.com/powerapps/developer/common-data-service/plug-ins
-    /// Best practices and guidance: https://docs.microsoft.com/powerapps/developer/common-data-service/best-practices/business-logic/
-    /// </summary>
-    public class Plugin1 : PluginBase
+ public class MyPlugin : PluginBase
+{
+  // Constructor
+  public MyPlugin(string unsecureConfiguration, string secureConfiguration)
+       : base(typeof(MyPlugin))
+  { }
+
+  protected override void ExecuteDataversePlugin(ILocalPluginContext localPluginContext)
+  {
+    if (localPluginContext == null)
     {
-        public Plugin1(string unsecureConfiguration, string secureConfiguration)
-            : base(typeof(Plugin1))
-        {
-            // TODO: Implement your custom configuration handling
-            // https://docs.microsoft.com/powerapps/developer/common-data-service/register-plug-in#set-configuration-data
-        }
+      throw new ArgumentNullException(nameof(localPluginContext));
+    }
 
-        // Entry point for custom business logic execution
-        protected override void ExecuteDataversePlugin(ILocalPluginContext localPluginContext)
-        {
-            if (localPluginContext == null)
-            {
-                throw new ArgumentNullException(nameof(localPluginContext));
-            }
+    var context        = localPluginContext.PluginExecutionContext;
+    var serviceFactory = localPluginContext.OrgSvcFactory;
+    var tracingService = localPluginContext.TracingService;
 
-              var context        = localPluginContext.PluginExecutionContext;
-              var serviceFactory = localPluginContext.OrgSvcFactory;
-              var tracingService = localPluginContext.TracingService;
-                         
-
-             try
-            {
-              Entity entity = (Entity)context.InputParameters["Target"];
+    try
+    {
+      Entity entity = (Entity)context.InputParameters["Target"];
               if (entity.LogicalName != "account" )
               {
                 return;
@@ -48,21 +40,17 @@ namespace crmplugin
                   tracingService.Trace("Account created suscessfuly");  
               }
               else{ return;}
-               //Account acct = context.InputParameters["Target"].ToEntity<Account>();
-            // TODO Plug-in business logic goes here. You can access data in the context,
-            // and make calls to the Organization web service using the Dataverse SDK.
-            
-            }
-            catch (FaultException<OrganizationServiceFault> ex)
-            {
-             tracingService.Trace("An exception occurred in MyPlugin: {0}", ex.ToString());     
-             throw new InvalidPluginExecutionException("The following error occurred in MyPlugin.", ex);
-            }
-            catch (Exception ex)
-            {
-                tracingService.Trace("MyPlugin: error: {0}", ex.ToString());
-                throw;
-            }
-        }
     }
+    catch (FaultException<OrganizationServiceFault> ex)
+    {
+     tracingService.Trace("An exception occurred in MyPlugin: {0}", ex.ToString());     
+  	 throw new InvalidPluginExecutionException("The following error occurred in MyPlugin.", ex);
+    }
+    catch (Exception ex)
+    {
+        tracingService.Trace("MyPlugin: error: {0}", ex.ToString());
+        throw;
+    }
+  }
+}
 }
