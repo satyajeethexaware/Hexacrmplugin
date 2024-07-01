@@ -27,6 +27,7 @@ namespace crmplugin
     try
     {
       Entity entity = (Entity)context.InputParameters["Target"];
+      tracingService.Trace("Entity name {0}",entity.LogicalName); 
              if (entity.LogicalName == "account" && context.MessageName == "update") 
               {
                     tracingService.Trace("Account updated suscessfuly.");  
