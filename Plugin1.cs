@@ -27,11 +27,7 @@ namespace crmplugin
     try
     {
       Entity entity = (Entity)context.InputParameters["Target"];
-              if (entity.LogicalName != "account" )
-              {
-                return;
-              }
-              else if (entity.LogicalName == "account" && context.MessageName == "update") 
+             if (entity.LogicalName == "account" && context.MessageName == "update") 
               {
                     tracingService.Trace("Account updated suscessfuly.");  
               }
@@ -39,7 +35,10 @@ namespace crmplugin
               {
                   tracingService.Trace("Account created suscessfuly");  
               }
-              else{ return;}
+              else
+              { 
+                return;
+              }
     }
     catch (FaultException<OrganizationServiceFault> ex)
     {
