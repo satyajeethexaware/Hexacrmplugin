@@ -31,8 +31,8 @@ namespace crmplugin
                // entity.Attributes.Contains("")
              if (entity.LogicalName == "account" && context.MessageName == "update" && entity.Attributes.Contains("name")) 
               {
-                    tracingService.Trace("Account name updated suscessfuly.");  
-              }
+                    throw new InvalidPluginExecutionException("account name updated");
+                }
               else if (entity.LogicalName == "account" && context.MessageName == "create")
               {
                   tracingService.Trace("Account created suscessfuly");  
