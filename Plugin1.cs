@@ -27,10 +27,11 @@ namespace crmplugin
     try
     {
       Entity entity = (Entity)context.InputParameters["Target"];
-      tracingService.Trace("Entity name {0}",entity.LogicalName); 
-             if (entity.LogicalName == "account" && context.MessageName == "update") 
+      tracingService.Trace("Entity name {0}",entity.LogicalName);
+               // entity.Attributes.Contains("")
+             if (entity.LogicalName == "account" && context.MessageName == "update" && entity.Attributes.Contains("name")) 
               {
-                    tracingService.Trace("Account updated suscessfuly.");  
+                    tracingService.Trace("Account name updated suscessfuly.");  
               }
               else if (entity.LogicalName == "account" && context.MessageName == "create")
               {
