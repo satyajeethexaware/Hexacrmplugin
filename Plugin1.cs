@@ -29,11 +29,11 @@ namespace crmplugin
       Entity entity = (Entity)context.InputParameters["Target"];
       tracingService.Trace("Entity name {0}",entity.LogicalName);
                // entity.Attributes.Contains("")
-             if (entity.LogicalName == "account" && context.MessageName == "update" && entity.Attributes.Contains("name")) 
+             if (entity.LogicalName == "account" && upper(context.MessageName) == "UPDATE" && entity.Attributes.Contains("NAME")) 
               {
-                    throw new InvalidPluginExecutionException("account name updated");
+                    throw new InvalidPluginExecutionException("Cannot update name");
                 }
-              else if (entity.LogicalName == "account" && context.MessageName == "create")
+              else if (entity.LogicalName == "account" && upper(context.MessageName) == "CREATE")
               {
                   tracingService.Trace("Account created suscessfuly");  
               }
